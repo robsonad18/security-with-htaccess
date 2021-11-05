@@ -1,0 +1,24 @@
+Options -Indexes
+
+AuthType Basic
+AuthName "Acesso restrito"
+AuthUserFile .htpasswd
+Require valid-user
+
+<FilesMatch "\.env$">
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.json$">
+    Order allow,deny
+    Allow from 127.0.0.0
+</FilesMatch>
+
+<Limit POST DELETE>
+    Deny from all
+</Limit>
+
+RewriteEngine on
+
+RewriteCond %{QUERY_STRING} "script"
+RewriteRule .* - [F]
